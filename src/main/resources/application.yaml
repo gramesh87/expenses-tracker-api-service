@@ -1,0 +1,18 @@
+server:
+  port: 8800
+  servlet:
+    context-path: /expenses/api
+
+spring:
+  application:
+    name: expenses-tracker-api-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/expenses?useSSL=false
+    username: developer
+    password: develop@mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
