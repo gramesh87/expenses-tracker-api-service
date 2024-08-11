@@ -1,10 +1,10 @@
 package com.home.expenses.controller;
 
 import com.home.expenses.entity.User;
+import com.home.expenses.exceptions.InvalidDataException;
 import com.home.expenses.exceptions.InvalidUserException;
 import com.home.expenses.exceptions.UserNotFoundException;
 import com.home.expenses.service.UserService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +29,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(service.createUser(user));
+    public ResponseEntity<User> createUser(@RequestBody User user) throws InvalidDataException {
+        return ResponseEntity.ok(service.saveUser(user));
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) throws UserNotFoundException, InvalidUserException {
-        return ResponseEntity.ok(service.updateUser(user));
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable long id,
+                                           @RequestBody User user) throws UserNotFoundException, InvalidUserException, InvalidDataException {
+        return ResponseEntity.ok(service.updateUser(id, user));
     }
 }
